@@ -74,7 +74,7 @@ def generateGraph1():
     
     for scenario in scenarios:
         length_list = []
-        points = 5
+        points = 50
         n = 100
         quickSort_duration = []
         heapSort_duration = []
@@ -183,7 +183,7 @@ def execute_sorting_algorithms(array):
 def generateGraph2():
     print("started")
     scenarios = [RandomFrom0ToN, RandomFrom0ToK, RandomFrom0ToNCube, RandomFrom0ToLogN, RandomMultiplesOf1000, RandomValuesSwapping]
-    points = 5
+    points = 50
     n = 100
     results = []
 

@@ -18,8 +18,8 @@ def getLineGraph(length_lists, duration_lists, sorting_algorithm):
     # Add a legend
     plt.legend()
 
-    #path = 'output/'+sorting_algorithm+'.png'
-    #plt.savefig(path)
+    path = 'output/'+sorting_algorithm+'.png'
+    plt.savefig(path)
     
     # Show the plot
     plt.show()
@@ -48,7 +48,7 @@ def plot_results(results):
         plt.legend()
 
         # Save the plot to a file
-        #plt.savefig(f'output/sorting_algorithms_line_{scenario}.png')
+        plt.savefig(f'output/sorting_algorithms_line_{scenario}.png')
 
         # Show the plot
         plt.show()

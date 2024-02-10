@@ -231,60 +231,55 @@ def radixSort(arr):
 #
 #    Bucket Sort
 #
-def insertion_sort(array, left=0, right=None):
-    if right is None:
-        right = len(array) - 1
-
-    # Loop from the element indicated by
-    # `left` until the element indicated by `right`
-    for i in range(left + 1, right + 1):
-        # This is the element we want to position in its
-        # correct place
-        key_item = array[i]
-
-        # Initialize the variable that will be used to
-        # find the correct position of the element referenced
-        # by `key_item`
+def insertion_sort(bucket):
+    for i in range (1, len (bucket)):
+        var = bucket[i]
         j = i - 1
+        while (j >= 0 and var < bucket[j]):
+            bucket[j + 1] = bucket[j]
+            j = j - 1
+        bucket[j + 1] = var
 
-        # Run through the list of items (the left
-        # portion of the array) and find the correct position
-        # of the element referenced by `key_item`. Do this only
-        # if the `key_item` is smaller than its adjacent values.
-        while j >= left and array[j] > key_item:
-            # Shift the value one position to the left
-            # and reposition `j` to point to the next element
-            # (from right to left)
-            array[j + 1] = array[j]
-            j -= 1
+def bucketSort(input_list):
+    # Check if the input_list is empty
+    if not input_list:
+        return input_list
 
-        # When you finish shifting the elements, position
-        # the `key_item` in its correct location
-        array[j + 1] = key_item
+    # Find the minimum and maximum values in the list
+    min_value, max_value = min(input_list), max(input_list)
+    
+    # Calculate the range of values and set the size of each bucket
+    value_range = max_value - min_value
+    size = value_range / len(input_list) if len(input_list) != 0 else 1
 
-    return array
+    # Create n empty buckets where n is equal to the length of the input list
+    buckets_list = [[] for _ in range(len(input_list))]
 
-def bucketSort(array):
-    bucket_size = 100
-    min = array[0]
-    max = array[0]
-    for i in range(1, len(array)):
-        if array[i] < min:
-            min = array[i]
-        elif array[i] > max:
-            max = array[i]
-    bucket_count = ((max - min) // bucket_size) + 1
-    buckets = []
-    for i in range(0, bucket_count):
-        buckets.append([])
-    for i in range(0, len(array)):
-        buckets[(array[i] - min) // bucket_size].append(array[i])
-    k = 0
-    for i in range(0, len(buckets)):
-        insertion_sort(buckets[i])
-        for j in range(0, len(buckets[i])):
-            array[k] = buckets[i][j]
-            k += 1
+    # Put list elements into different buckets based on their value range
+    for i in range(len(input_list)):
+        # Handle the case where size is zero
+        if size != 0:
+            # Use integer division (//) to ensure j is an integer
+            j = int((input_list[i] - min_value) / size)
+        else:
+            j = 0
+
+        if j != len(input_list):
+            buckets_list[j].append(input_list[i])
+        else:
+            buckets_list[len(input_list) - 1].append(input_list[i])
+
+    # Sort elements within the buckets using Insertion Sort
+    for z in range(len(input_list)):
+        insertion_sort(buckets_list[z])
+            
+    # Concatenate buckets with sorted elements into a single list
+    final_output = []
+    for x in range(len(input_list)):
+        final_output.extend(buckets_list[x])
+    
+    return final_output
+
 #
 #   Tim Sort
 #

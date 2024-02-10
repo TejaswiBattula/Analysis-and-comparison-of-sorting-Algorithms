@@ -3,7 +3,6 @@ import time
 import random
 import plot
 import math
-import numpy as np
 
 
 def RandomFrom0ToN(n):
@@ -21,7 +20,7 @@ def RandomFrom0ToK(n):
 
 def RandomFrom0ToNCube(n):
     array = []
-    cube = n*n*n
+    cube = n * n * n
     for i in range(0, n):
         array.append(random.randint(0, cube))
     return array
@@ -43,7 +42,7 @@ def RandomMultiplesOf1000(n):
     
     return array
 
-def RandomValuesSwaping(n):
+def RandomValuesSwapping(n):
     # Generate in-order array from 0 to n
     original_array = list(range(n + 1))
 
@@ -60,10 +59,9 @@ def RandomValuesSwaping(n):
 
     return original_array
 
-
-def generateGraph():
+def generateGraph1():
     print("started")
-    scenarios = [RandomFrom0ToN, RandomFrom0ToK, RandomFrom0ToNCube, RandomFrom0ToLogN, RandomMultiplesOf1000, RandomValuesSwaping]
+    scenarios = [RandomFrom0ToN, RandomFrom0ToK, RandomFrom0ToNCube, RandomFrom0ToLogN, RandomMultiplesOf1000, RandomValuesSwapping]
     #sorting_algorithms = [quickSort, heapSort, mergeSort, radixSort, bucketSort, timSort]
     quickSort_duration_list = []
     heapSort_duration_list = []
@@ -160,7 +158,45 @@ def generateGraph():
     plot.getLineGraph(length_lists, timSort_duration_list, "tim sort")
 
 
-generateGraph()
+def execute_sorting_algorithms(array):
+    algorithms = [
+        ("Quick Sort", sort.quickSort),
+        ("Heap Sort", sort.heapSort),
+        ("Merge Sort", sort.mergeSort),
+        ("Radix Sort", sort.radixSort),
+        ("Bucket Sort", sort.bucketSort),
+        ("Tim Sort", sort.timSort)
+    ]
 
+    results = {}
 
+    for algorithm_name, algorithm_func in algorithms:
+        array_copy = array.copy()
+        start_time = time.time()
+        algorithm_func(array_copy)
+        end_time = time.time()
+        duration = end_time - start_time
+        results[algorithm_name] = duration
 
+    return results
+
+def generateGraph2():
+    print("started")
+    scenarios = [RandomFrom0ToN, RandomFrom0ToK, RandomFrom0ToNCube, RandomFrom0ToLogN, RandomMultiplesOf1000, RandomValuesSwapping]
+    points = 5
+    n = 100
+    results = []
+
+    while points:
+        for scenario in scenarios:
+            array = scenario(n)
+            results.append({"Length": n, "Scenario": scenario.__name__, **execute_sorting_algorithms(array)})
+
+        print(f"Point: {points}")
+        n += 1000
+        points -= 1
+
+    plot.plot_results(results)
+
+generateGraph1()
+generateGraph2()

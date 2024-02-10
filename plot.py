@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 def getLineGraph(length_lists, duration_lists, sorting_algorithm):
     # Plot the line graph
     for i, (length_list, duration_list) in enumerate(zip(length_lists, duration_lists)):
-        label = f"scenario - {i}"
+        label = f"scenario - {i+1}"
         plt.plot(length_list, duration_list, label=label)
 
     # Add labels and title

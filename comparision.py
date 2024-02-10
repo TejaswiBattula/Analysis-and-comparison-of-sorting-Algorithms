@@ -44,14 +44,21 @@ def RandomMultiplesOf1000(n):
     return array
 
 def RandomValuesSwaping(n):
-    sequence = list(range(n + 1))
+    # Generate in-order array from 0 to n
+    original_array = list(range(n + 1))
 
-    # Perform swaps to create a partially shuffled sequence
-    for _ in range(n // 2):
+    # Determine the number of values to be swapped
+    num_swaps = math.ceil(math.log(n) / 2)
+
+    # Perform swaps
+    for _ in range(num_swaps):
+        # Randomly choose two indices to swap
         index1, index2 = random.sample(range(n + 1), 2)
-        sequence[index1], sequence[index2] = sequence[index2], sequence[index1]
 
-    return sequence
+        # Swap values at the chosen indices
+        original_array[index1], original_array[index2] = original_array[index2], original_array[index1]
+
+    return original_array
 
 
 def generateGraph():
@@ -69,7 +76,7 @@ def generateGraph():
     
     for scenario in scenarios:
         length_list = []
-        points = 50
+        points = 5
         n = 100
         quickSort_duration = []
         heapSort_duration = []
@@ -92,39 +99,46 @@ def generateGraph():
             sort.quickSort(quickSort_array)
             quickSort_end_time = time.time()
             quickSort_duration.append(quickSort_end_time - quickSort_start_time)
+            print("quick sort executed..")
 
             # heapSort
             heapSort_start_time = time.time()
             sort.heapSort(heapSort_array)
             heapSort_end_time = time.time()
             heapSort_duration.append(heapSort_end_time - heapSort_start_time)
+            print("heap sort executed..")
 
             # mergeSort
             mergeSort_start_time = time.time()
             sort.mergeSort(mergeSort_array)
             mergeSort_end_time = time.time()
             mergeSort_duration.append(mergeSort_end_time - mergeSort_start_time)
+            print("merge sort executed..")
 
             # radixSort      
             radixSort_start_time = time.time()
             sort.radixSort(radixSort_array)
             radixSort_end_time = time.time()
             radixSort_duration.append(radixSort_end_time - radixSort_start_time)
+            print("radix sort executed..")
 
             # bucketSort
             bucketSort_start_time = time.time()
             sort.bucketSort(bucketSort_array)
             bucketSort_end_time = time.time()
             bucketSort_duration.append(bucketSort_end_time - bucketSort_start_time)
+            print("bucket sort executed..")
 
             # timSort
             timSort_start_time = time.time()
             sort.timSort(timSort_array)
             timSort_end_time = time.time()
             timSort_duration.append(timSort_end_time - timSort_start_time)
+            print("tim sort executed..")
 
             length_list.append(n)
             print(n)
+            print(scenario)
             # print(end_time - start_time)
             points -= 1
             n += 1000

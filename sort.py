@@ -231,15 +231,6 @@ def radixSort(arr):
 #
 #    Bucket Sort
 #
-def bucketSort(array):
-    for i in range(len(array)):
-        for j in range(len(array)-1-i):
-            if array[j] > array[j+1]:
-                array[j], array[j+1] = array[j+1], array[j]
-
-#
-#   Tim Sort
-#
 def insertion_sort(array, left=0, right=None):
     if right is None:
         right = len(array) - 1
@@ -273,6 +264,30 @@ def insertion_sort(array, left=0, right=None):
 
     return array
 
+def bucketSort(array):
+    bucket_size = 100
+    min = array[0]
+    max = array[0]
+    for i in range(1, len(array)):
+        if array[i] < min:
+            min = array[i]
+        elif array[i] > max:
+            max = array[i]
+    bucket_count = ((max - min) // bucket_size) + 1
+    buckets = []
+    for i in range(0, bucket_count):
+        buckets.append([])
+    for i in range(0, len(array)):
+        buckets[(array[i] - min) // bucket_size].append(array[i])
+    k = 0
+    for i in range(0, len(buckets)):
+        insertion_sort(buckets[i])
+        for j in range(0, len(buckets[i])):
+            array[k] = buckets[i][j]
+            k += 1
+#
+#   Tim Sort
+#
 # Python3 program to perform basic timSort 
 MIN_MERGE = 32
   
